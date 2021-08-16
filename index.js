@@ -1,4 +1,5 @@
 const app = require('express')();
+const kill = require('tree-kill');
 const proccess = require('child_process');
 app.get('/', function(req, res) {
     var curl = req.headers['user-agent'].split("/")[0];
@@ -41,7 +42,8 @@ app.get('/', function(req, res) {
             }
         });
         res.on('close', function() {
-            ff.kill();
+            if (!ff.killed)
+                kill(ff.pid);
         });
     }
 });
