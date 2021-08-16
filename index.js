@@ -2,10 +2,15 @@ const app = require('express')();
 const kill = require('tree-kill');
 const proccess = require('child_process');
 app.get('/', function(req, res) {
-    var curl = req.headers['user-agent'].split("/")[0];
-    if (curl != "curl") {
-        res.redirect('https://github.com/Mr-Bossman/ascii-live.git', 302);
+    var curl = req.headers['user-agent'].split("/");
+    let powerPoop = true;
+    if (curl[1].split(")").length == 2)
+        if (curl[1].split(")")[1] == " WindowsPowerShell")
+            powerPoop = false;
+    if (curl[0] != "curl" && powerPoop) {
+        res.redirect(302, 'https://github.com/Mr-Bossman/ascii-live.git');
     } else {
+
         let height = 40;
         let width = 80;
         const query = Array.from((new URL(req.url, req.protocol + '://' + req.headers.host + '/')).searchParams);
@@ -21,7 +26,13 @@ app.get('/', function(req, res) {
 
         ff = proccess.spawn('./streamer.sh', [height.toString(), width.toString()]);
 
-
+        res.write(" if which afplay >/dev/null; then\n\
+                        afplay /tmp/roll.wav &\n\
+                    elif which aplay >/dev/null; then\n\
+                        aplay /tmp/roll.wav &\n\
+                    elif which play >/dev/null; then\n\
+                        play -q /tmp/roll.wav &\n\
+                    fi\ncat - \n");
         res.write("\u001b[?1049h\u001b(B\u001b[m\u001b[?7h\u001b[?1\u001b[H\u001b[2J");
 
         let frame = new Uint8Array();
