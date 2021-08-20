@@ -34,7 +34,7 @@ app.get('/', function(req, res) {
                 height = 360;
                 width = 640;
             }
-            if (fps < 30) {
+            if (query[2][1] < 30) {
                 fps = query[2][1]
             }
         }
