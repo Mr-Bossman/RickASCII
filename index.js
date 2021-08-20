@@ -17,6 +17,7 @@ app.get('/', function(req, res) {
 
         let height = 40;
         let width = 80;
+        let fps = 10;
         const query = Array.from((new URL(req.url, req.protocol + '://' + req.headers.host + '/')).searchParams);
         if (query.length === 2 && !isNaN(query[0][1]) && !isNaN(query[1][1])) {
             height = query[0][1];
@@ -26,41 +27,50 @@ app.get('/', function(req, res) {
                 width = 640;
             }
 
+        } else if (query.length === 3 && !isNaN(query[0][1]) && !isNaN(query[1][1]) && !isNaN(query[2][1])) {
+            height = query[0][1];
+            width = query[1][1];
+            if (height > 360 || width > 640) {
+                height = 360;
+                width = 640;
+            }
+            if (fps < 30) {
+                fps = query[2][1]
+            }
         }
 
-        ff = proccess.spawn('./streamer.sh', [height.toString(), width.toString()]);
+        ff = proccess.spawn('./streamer.sh', [height.toString(), width.toString(), fps.toString()]);
 
         res.write(" if which aplay >/dev/null; then\n\
                         if which curl >/dev/null; then\n\
-                            (curl -s http://keroserene.net/lol/roll.s16 | aplay )&\n\
+                            (curl -s http://keroserene.net/lol/roll.s16 | aplay &> /dev/null)&\n\
                         elif which wget >/dev/null; then\n\
-                            (wget -q -O - http://keroserene.net/lol/roll.s16 | aplay)&\n\
+                            (wget -q -O - http://keroserene.net/lol/roll.s16 | aplay &> /dev/null)&\n\
                         fi\n\
                      elif which afplay >/dev/null; then\n\
                          if which curl >/dev/null; then\n\
-                             curl -s http://keroserene.net/lol/roll.s16 > /tmp/roll.wav&\n\
-                             afplay /tmp/roll.wav &\n\
+                             curl -s http://keroserene.net/lol/roll.s16 > /tmp/roll.wav  2>/dev/null &\n\
+                             (afplay /tmp/roll.wav &> /dev/null)&\n\
                          elif which wget >/dev/null; then\n\
-                             wget -q -O - http://keroserene.net/lol/roll.s16 > /tmp/roll.wav&\n\
-                             afplay /tmp/roll.wav &\n\
+                             wget -q -O - http://keroserene.net/lol/roll.s16 > /tmp/roll.wav  2>/dev/null &\n\
+                             (afplay /tmp/roll.wav &> /dev/null)&\n\
                          fi\n\
                      elif which play >/dev/null; then\n\
                          if which curl >/dev/null; then\n\
-                             curl -s http://keroserene.net/lol/roll.gsm > /tmp/roll.wav&\n\
-                             play /tmp/roll.wav &\n\
+                             curl -s http://keroserene.net/lol/roll.gsm > /tmp/roll.wav  2>/dev/null &\n\
+                             (play /tmp/roll.wav &> /dev/null)&\n\
                          elif which wget >/dev/null; then\n\
-                             wget -q -O - http://keroserene.net/lol/roll.gsm > /tmp/roll.wav&\n\
-                             play /tmp/roll.wav &\n\
+                             wget -q -O - http://keroserene.net/lol/roll.gsm > /tmp/roll.wav 2>/dev/null &\n\
+                             (play /tmp/roll.wav &> /dev/null)&\n\
                          fi\n\
                      fi\ncat - \n");
-        res.write("curl -s " + req.hostname + "/win.py > %temp%/win.py\r\n");
-        res.write(".\\python.exe %temp%/win.py\r\n");
+        res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s " + req.hostname + "/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
 
         res.write("\u001b[?1049h\u001b(B\u001b[m\u001b[?7h\u001b[?1\u001b[H\u001b[2J");
-
+        const banner = "Hey did you know you can add sound by `curl.exe -sN " + req.hostname + " | cmd.exe` or `curl -s  " + req.hostname + " | bash`."
         let frame = new Uint8Array();
         let lastC = "";
-        const end = "\u001b[m\u001b[" + height.toString() + "H\n\n\n";
+        const end = "\u001b[m\u001b[" + height.toString() + "H\n\n\n" + banner;
         ff.stdout.on("data", function(data) {
             frame += data;
             if (frame.toString().substring(frame.toString().length - 1) === "H") {
