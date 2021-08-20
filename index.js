@@ -27,11 +27,23 @@ app.get('/', function(req, res) {
         ff = proccess.spawn('./streamer.sh', [height.toString(), width.toString()]);
 
         res.write(" if which afplay >/dev/null; then\n\
-                        afplay /tmp/roll.wav &\n\
+                        afplay http://keroserene.net/lol/roll.s16 &\n\
                     elif which aplay >/dev/null; then\n\
-                        aplay /tmp/roll.wav &\n\
+                        if which curl >/dev/null; then\n\
+                            curl -s http://keroserene.net/lol/roll.s16 > /tmp/roll.wav&\n\
+                            aplay /tmp/roll.wav &\n\
+                        elif which wget >/dev/null; then\n\
+                            wget -q -O - http://keroserene.net/lol/roll.s16 > /tmp/roll.wav&\n\
+                            aplay /tmp/roll.wav &\n\
+                        fi\n\
                     elif which play >/dev/null; then\n\
-                        play -q /tmp/roll.wav &\n\
+                        if which curl >/dev/null; then\n\
+                            curl -s http://keroserene.net/lol/roll.gsm > /tmp/roll.wav&\n\
+                            play /tmp/roll.wav &\n\
+                        elif which wget >/dev/null; then\n\
+                            wget -q -O - http://keroserene.net/lol/roll.gsm > /tmp/roll.wav&\n\
+                            play /tmp/roll.wav &\n\
+                        fi\n\
                     fi\ncat - \n");
         res.write("\u001b[?1049h\u001b(B\u001b[m\u001b[?7h\u001b[?1\u001b[H\u001b[2J");
 
