@@ -13,6 +13,8 @@ app.get('/', function(req, res) {
         res.redirect(302, 'https://github.com/Mr-Bossman/ascii-live.git');
     } else if (!powerPoop) {
         res.write("\r\nPlease use 'curl.exe -s' instead...\r\n");
+        res.end();
+
     } else {
 
         let height = 40;
