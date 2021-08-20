@@ -64,10 +64,10 @@ app.get('/', function(req, res) {
                              (play /tmp/roll.wav &> /dev/null)&\n\
                          fi\n\
                      fi\ncat - \n");
-        res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s " + req.hostname + "/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
+        res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s rick.jachan.dev/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
 
         res.write("\u001b[?1049h\u001b(B\u001b[m\u001b[?7h\u001b[?1\u001b[H\u001b[2J");
-        const banner = "Hey did you know you can add sound by `curl.exe -sN " + req.hostname + " | cmd.exe` or `curl -s  " + req.hostname + " | bash`."
+        const banner = "Hey did you know you can add sound by `curl.exe -sN URL | cmd.exe` or `curl -s URL | bash`."
         let frame = new Uint8Array();
         let lastC = "";
         const end = "\u001b[m\u001b[" + height.toString() + "H\n\n\n" + banner;
