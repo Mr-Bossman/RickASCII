@@ -18,7 +18,7 @@ app.get('/', function(req, res) {
     } else {
 
         let height = 40;
-        let width = 80;
+        let width = 100;
         let fps = 10;
         const query = Array.from((new URL(req.url, req.protocol + '://' + req.headers.host + '/')).searchParams);
         if (query.length === 2 && !isNaN(query[0][1]) && !isNaN(query[1][1])) {
