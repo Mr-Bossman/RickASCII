@@ -1,0 +1,23 @@
+{
+  "name": "ascii-live",
+  "version": "1.0.0",
+  "description": "Using libcaca to host a live rick-roll",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Bossman/ascii-live.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-Bossman/ascii-live/issues"
+  },
+  "homepage": "https://github.com/Mr-Bossman/ascii-live#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "tree-kill": "^1.2.2"
+  }
+}
