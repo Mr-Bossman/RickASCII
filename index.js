@@ -44,7 +44,7 @@ app.get('/', function(req, res) {
         const banner = "Hey did you know you can add sound by `curl.exe -sN https://rick.jachan.dev | cmd.exe` or `curl -sN https://rick.jachan.dev | bash`."
         const end = "\033[2J\u001b[26H" + banner + "\033[0H";
         ff.stdout.on("data", function(data) {
-            res.write(data.toString().replace("\033[2J\033[0H",end).replace("\033[0m","\033[0m\n" + "\r ".repeat(2048)));
+            res.write(data.toString().replace("\033[2J\033[0H",end).replace("\033[0m","\033[0m\n\n" + "\r".repeat(2048)));
         });
         res.on('close', function() {
             if (!ff.killed)
@@ -56,4 +56,4 @@ app.get('/win.py', function(req, res) {
     res.write(fs.readFileSync(path.join(__dirname, "./win.py")).toString().replace(/\n/g, '\r\n'));
     res.end();
 });
-app.listen(80);
+app.listen(8080);
