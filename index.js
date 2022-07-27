@@ -12,7 +12,7 @@ app.get('/', function(req, res) {
     if (curl[0] != "curl" && powerPoop) {
         res.redirect(302, 'https://github.com/Mr-Bossman/ascii-live.git');
     } else if (!powerPoop) {
-        res.write("\r\nPlease use 'curl.exe -s' instead...\r\n");
+        res.write("\r\nPlease use 'curl.exe -sN' instead...\r\n");
         res.end();
     } else {
         ff = proccess.spawn('./display', ['rick.txt', '5']);
@@ -39,9 +39,9 @@ app.get('/', function(req, res) {
                              (play /tmp/roll.wav &> /dev/null)&\n\
                          fi\n\
                      fi\ncat - \n");
-        res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s rick.jachan.dev/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
+        res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s https://rick.jachan.dev/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
 
-        const banner = "Hey did you know you can add sound by `curl.exe -sN URL | cmd.exe` or `curl -s URL | bash`."
+        const banner = "Hey did you know you can add sound by `curl.exe -sN https://rick.jachan.dev | cmd.exe` or `curl -sN https://rick.jachan.dev | bash`."
         const end = "\033[2J\u001b[26H" + banner + "\033[0H";
         ff.stdout.on("data", function(data) {
             res.write(data.toString().replace("\033[2J\033[0H",end));
@@ -53,7 +53,7 @@ app.get('/', function(req, res) {
     }
 });
 app.get('/win.py', function(req, res) {
-    res.write(fs.readFileSync(path.join(__dirname, "./win.cmd")).toString().replace(/\n/g, '\r\n'));
+    res.write(fs.readFileSync(path.join(__dirname, "./win.py")).toString().replace(/\n/g, '\r\n'));
     res.end();
 });
 app.listen(80);

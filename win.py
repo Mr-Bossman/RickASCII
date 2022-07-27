@@ -8,7 +8,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
-id = subprocess.Popen(["powershell","-Command","&{$PlayWav=New-Object System.Media.SoundPlayer('http://keroserene.net/lol/roll.s16'); $PlayWav.LoadAsync(); $PlayWav.playsync()}"])
+id = subprocess.Popen(["powershell","-Command","&{$PlayWav=New-Object System.Media.SoundPlayer('https://keroserene.net/lol/roll.s16'); $PlayWav.LoadAsync(); $PlayWav.playsync()}"])
 os.system("")
 while(True):
 	print(sys.stdin.read(1),end="")
