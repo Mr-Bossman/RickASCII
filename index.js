@@ -47,7 +47,7 @@ app.get('/', function(req, res) {
                      fi\ncat - \n");
         res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s https://rick.jachan.dev/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
 
-        const banner = "Hey did you know you can add sound by `curl.exe -sN https://rick.jachan.dev | cmd.exe` or `curl -sN https://rick.jachan.dev | bash`."
+        const banner = "Hey did you know you can add sound by `curl.exe -sN http://rick.jachan.dev | cmd.exe` or `curl -sN http://rick.jachan.dev | bash`."
         const end = "\033[2J\u001b[26H" + banner + "\033[0H";
         ff.stdout.on("data", function(data) {
             res.write(data.toString().replace("\033[2J\033[0H",end).replace("\033[0m","\033[0m\n\n" + "\r".repeat(4096)));
