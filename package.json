@@ -1,5 +1,5 @@
 {
-  "name": "RickASCII"
+  "name": "RickASCII",
   "version": "1.0.0",
   "description": "RickRoll using curl",
   "main": "index.js",
