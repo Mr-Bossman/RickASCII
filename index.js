@@ -30,21 +30,18 @@ app.get('/', function(req, res) {
                         fi\n\
                      elif which afplay >/dev/null; then\n\
                          if which curl >/dev/null; then\n\
-                             curl -s https://keroserene.net/lol/roll.s16 > /tmp/roll.wav  2>/dev/null &\n\
-                             (afplay /tmp/roll.wav &> /dev/null)&\n\
+                             (curl -s https://keroserene.net/lol/roll.s16 > /tmp/roll.wav 2>/dev/null; afplay /tmp/roll.wav &> /dev/null)&\n\
                          elif which wget >/dev/null; then\n\
-                             wget -q -O - https://keroserene.net/lol/roll.s16 > /tmp/roll.wav  2>/dev/null &\n\
-                             (afplay /tmp/roll.wav &> /dev/null)&\n\
+                             (wget -q -O - https://keroserene.net/lol/roll.s16 > /tmp/roll.wav 2>/dev/null; afplay /tmp/roll.wav &> /dev/null)&\n\
                          fi\n\
                      elif which play >/dev/null; then\n\
                          if which curl >/dev/null; then\n\
-                             curl -s https://keroserene.net/lol/roll.gsm > /tmp/roll.wav  2>/dev/null &\n\
-                             (play /tmp/roll.wav &> /dev/null)&\n\
+                             (curl -s https://keroserene.net/lol/roll.gsm > /tmp/roll.wav 2>/dev/null; play /tmp/roll.wav &> /dev/null)&\n\
                          elif which wget >/dev/null; then\n\
-                             wget -q -O - https://keroserene.net/lol/roll.gsm > /tmp/roll.wav 2>/dev/null &\n\
-                             (play /tmp/roll.wav &> /dev/null)&\n\
+                             (wget -q -O - https://keroserene.net/lol/roll.gsm > /tmp/roll.wav 2>/dev/null; play /tmp/roll.wav &> /dev/null)&\n\
                          fi\n\
-                     fi\ncat - \n");
+                     fi\n\
+                     cat - \n");
         res.write("curl -s https://www.python.org/ftp/python/3.9.6/python-3.9.6-embed-amd64.zip -o %temp%/py.zip\r\npowershell -Command \"Expand-Archive -Force %temp%/py.zip %temp%/python_tmp\"\r\ncurl -s https://rick.jachan.dev/win.py > %temp%/win.py\r\n%temp%/python_tmp/python.exe %temp%/win.py\r\n");
 
         const banner = "Hey did you know you can add sound by `curl.exe -sN http://rick.jachan.dev | cmd.exe` or `curl -sN http://rick.jachan.dev | bash`."
